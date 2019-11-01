@@ -147,9 +147,8 @@
     }
 
     function removeProperties() {
-      $('#selected-items li').each( function () {
-          var item = $(this);
-          item.remove();
+      document.querySelectorAll("#selected-props li").forEach(function(prop) {
+        prop.remove();
       });
       // reset the cache
       resourcesDict = {};
