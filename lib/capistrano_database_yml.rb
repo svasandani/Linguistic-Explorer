@@ -135,9 +135,11 @@ Capistrano::Configuration.instance.load do
         template = File.file?(location) ? File.read(location) : default_template
 
         config = ERB.new(template)
-        run "#{try_sudo} mkdir -p #{shared_path}/db" 
-        run "#{try_sudo} mkdir -p #{shared_path}/config" 
-        run "#{try_sudo} echo \"#{config.result(binding)}\" >> #{shared_path}/config/database.yml"
+        run "#{sudo :sudo_password => ""} mkdir -p #{shared_path}/db" 
+        run "#{sudo :sudo_password => ""} mkdir -p #{shared_path}/config" 
+        run "#{sudo :sudo_password => ""} touch #{shared_path}/config/database.yml"
+        run "echo $'#{config.result(binding)}' | sed -r 's[\\[\\][ [' | #{sudo :sudo_password => ""} tee #{shared_path}/config/database.yml"
+        run "#{sudo :sudo_password => ""} chown ec2-user:ec2-user ~/terraling/Linguistic-Explorer"
         # put config.result(binding), "#{shared_path}/config/database.yml"
       end
 

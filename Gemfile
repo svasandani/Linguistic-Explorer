@@ -85,7 +85,8 @@ group :deploy do
   # # Comment this line if you are not using RVM
   # # Starting with RVM 1.11.3 Capistrano integration was extracted to a separate gem.
   # # See https://rvm.io/integration/capistrano/
-  gem 'rvm-capistrano', "~>1.5.4"
+  # gem 'rvm-capistrano', "~>1.5.4"
+  gem 'capistrano-rbenv'
 end
 
 gem "hogan_assets", "~>1.6.0"

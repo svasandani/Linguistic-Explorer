@@ -10,14 +10,14 @@ default_run_options[:pty]   = true
 
 # if :aws_deploy
 #   # ssh_options[:auth_methods]  = [:public_key]
-#   ssh_options[:keys]          = ["/home/dej611/.ssh/aws-free.pem"]
+  ssh_options[:keys]          = ["~/Documents/terraling_private_key.pem"]
 # end
 
 
-set :application  , "terraling"
-# set :deploy_to    , "/var/www/apps/#{application}"
+set :application  , "terraling/Linguistic-Explorer"
+set :deploy_to    , "/home/ec2-user/#{application}"
 set :deploy_via   , :remote_cache
-# set :user         , "admin"
+set :user         , "ec2-user"
 # set :use_sudo     , true
 # set :multiyaml_stages, "yamls/deploy.yml"
 set :keep_releases, 3
@@ -25,8 +25,8 @@ set :keep_releases, 3
 # source control
 set :scm          , :git
 set :scm_verbose  , true
-set :repository   , "git://github.com/linguisticexplorer/Linguistic-Explorer.git"
-# set :branch       , "master"
+set :repository   , "git://github.com/svasandani/Linguistic-Explorer.git"
+set :branch       , "sprint"
 set :copy_exclude , ['.git']
 
 # require "capistrano-multiyaml"
@@ -35,20 +35,23 @@ set :copy_exclude , ['.git']
 # role :web, HTTP server (Apache)/etc
 # role :app, app server
 # role :db, master db server
-# server "50.56.97.125:10003", :app, :web, :db, :primary => true
+server "ec2-13-59-1-150.us-east-2.compute.amazonaws.com", :app, :web, :db, :primary => true
 
-require "rvm/capistrano"
+# require "rvm/capistrano"
+require "capistrano-rbenv"
+set :rbenv_ruby_version, "2.1.2"
 $: << File.join(File.dirname(__FILE__), "..", "lib")
 
-begin
-  # RVM Ruby Version Manager
-  $:.unshift(File.expand_path('./lib', ENV['rvm_path']))  # Add RVM's lib directory to the load path.
-  require "rvm/capistrano"
-  # set :rvm_ruby_string, "1.9.2-head@ling"                 # set rvm ruby version and gemset
-  set :rvm_type, :user
-rescue LoadError
-  puts "rvm not installed"
-end
+# begin
+#   # RVM Ruby Version Manager
+#   ENV['rvm_path'] = "~/.rvm/bin/rvm"
+#   $:.unshift(File.expand_path('./lib', ENV['rvm_path']))  # Add RVM's lib directory to the load path.
+#   require "rvm/capistrano"
+#   # set :rvm_ruby_string, "1.9.2-head@ling"                 # set rvm ruby version and gemset
+#   set :rvm_type, :user
+# rescue LoadError
+#   puts "rvm not installed"
+# end
 
 # Bundler
 require 'bundler/capistrano'
@@ -58,8 +61,8 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    # Update the gems
-    # run "/usr/bin/env bundle install"
+    Update the gems
+    run "/usr/bin/env bundle install"
     # Update the DB in case (it should not be necessary, but just in case...)
     # Note: Remember to backup before deploying...
     # run "/usr/bin/env bundle exec rake db:migrate"
