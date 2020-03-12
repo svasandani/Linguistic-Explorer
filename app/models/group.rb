@@ -33,8 +33,8 @@ class Group < ActiveRecord::Base
   has_many :stored_values,             :dependent => :destroy
   has_many :searches,                  :dependent => :destroy
 
-  scope :public,  where( :privacy => PUBLIC )
-  scope :private, where( :privacy => PRIVATE )
+  scope :public, -> (arg) { where( privacy: PUBLIC ) }
+  scope :private, -> { where( privacy: PRIVATE ) }
 
   def ling_name_for_depth(depth)
     if depth > depth_maximum
