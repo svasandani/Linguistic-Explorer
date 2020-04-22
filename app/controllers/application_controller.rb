@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_group
 
   rescue_from CanCan::AccessDenied, Exceptions::AccessDenied, :with => :show_error_message
-  
+
   def current_group
-    # Group.first # changed to default to first group
+    Group.first
   end
 
   before_action :configure_permitted_parameters, if: :devise_controller?
