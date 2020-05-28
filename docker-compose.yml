@@ -15,7 +15,7 @@ services:
 
   terraling-dockerized:
     build: .
-    image: terraling-dockerized
+    image: shaileshvasandani/terraling-dockerized
     restart: always
     volumes:
       - .:/terraling/
