@@ -9,7 +9,7 @@ services:
       - ./db/terraling_backup.sql:/docker-entrypoint-initdb.d/terraling_backup.sql
     environment:
       MYSQL_ROOT_PASSWORD: Terraling1!
-      MYSQL_DATABASE: terraling_production
+      MYSQL_DATABASE: terraling_dev
     expose:
       - '3306'
 
