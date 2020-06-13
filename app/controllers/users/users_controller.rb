@@ -66,7 +66,7 @@ class Users::UsersController  < ApplicationController
     @memberships = []
     memberships.each do |membership|
       hash = {}
-      next if membership.id.nil? or membership.role.nil? or membership.group_id.nil?
+      next if membership.role.nil?
       hash[:id] = membership.id
       hash[:group_name] = ""
       hash[:group_name] = Group.find_by_id(membership.group_id).name if Group.find_by_id(membership.group_id)
